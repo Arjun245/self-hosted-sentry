@@ -1,0 +1,26 @@
+# .gitignore
+
+# Ignore the Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Ignore the Terraform configuration lock file
+.terraform.lock.hcl
+
+# Ignore the .terraform directory (which contains local modules, plugins, etc.)
+.terraform/
+
+# Ignore sensitive files, such as private keys
+secrets/
+
+# Ignore backups
+*.bak
+
+# Ignore crash logs
+crash.log
+
+# Ignore any generated files for the Terraform provider or other tooling
+*.log
+
+# Ignore files that are not needed for version control
+*.pem
