@@ -2,7 +2,7 @@
 sentry_admin_email: "{{ ansible_env.SENTRY_ADMIN_EMAIL | default('admin@sentry.com') }}"
 sentry_admin_password: "{{ ansible_env.SENTRY_ADMIN_PASSWORD | default('admin') }}"
 
-sentry_repo_path: "/home/ubuntu/self-hosted"
+sentry_repo_path: "{{ ansible_env.SENTRY_REPO_PATH | default('/home/{{ ansible_user }}/self-hosted') }}"
 sentry_repo_url: "https://github.com/getsentry/self-hosted.git"
 sentry_repo_branch: "master"
 
