@@ -1,0 +1,87 @@
+---
+# Install Docker and necessary dependencies
+- name: Install Docker
+  include_role:
+    name: geerlingguy.docker
+
+- name: Add user to Docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+    state: present
+
+# Clone the self-hosted repository
+- name: Clone the Sentry self-hosted repository
+  git:
+    repo: "{{ sentry_repo_url }}"
+    dest: "{{ sentry_repo_path }}"
+    version: "{{ sentry_repo_branch }}"
+    force: yes
+
+# Set permissions for the self-hosted repo
+- name: Set permissions for the self-hosted repository
+  file:
+    path: "{{ sentry_repo_path }}"
+    mode: "0755"
+    recurse: yes
+
+# Set environment variable REPORT_SELF_HOSTED_ISSUES
+- name: Configure environment variables for Sentry
+  blockinfile:
+    path: /etc/environment
+    block: |
+      REPORT_SELF_HOSTED_ISSUES=0
+  become: true
+
+# Run the install.sh script to install Sentry (non-interactive)
+- name: Run Sentry installation script
+  shell: ./install.sh --skip-user-creation
+  args:
+    chdir: "{{ sentry_repo_path }}"
+  async: "{{ sentry_docker_async_timeout }}"
+  poll: "{{ sentry_docker_poll_interval }}"
+  become: true
+  tags: setup_sentry
+
+# Configure CSRF_TRUSTED_ORIGINS in sentry.conf.py
+- name: Configure CSRF_TRUSTED_ORIGINS
+  lineinfile:
+    path: "{{ sentry_repo_path }}/sentry/sentry.conf.py"
+    regexp: '^# CSRF_TRUSTED_ORIGINS = \["https://example.com", "http://127.0.0.1:9000"\]$'
+    line: 'CSRF_TRUSTED_ORIGINS = ["https://example.com", "http://127.0.0.1:9000", "http://{{ ansible_host }}:9000"]'
+  become: true
+  tags: configure_sentry_domain
+
+# Run docker compose up
+- name: Start Sentry using Docker Compose
+  shell: docker compose up --wait
+  args:
+    chdir: "{{ sentry_repo_path }}"
+  async: "{{ sentry_docker_async_timeout }}"
+  poll: "{{ sentry_docker_poll_interval }}"
+  become: true
+  tags: start_sentry
+
+# Create Sentry admin user
+- name: Create Sentry admin user
+  shell: |
+    docker compose run --rm web createuser \
+      --superuser \
+      --email {{ sentry_admin_email }} \
+      --password {{ sentry_admin_password }}
+  args:
+    chdir: "{{ sentry_repo_path }}"
+  ignore_errors: no
+  become: true
+  tags: create_sentry_admin
+
+# Verify Sentry is running
+- name: Verify Sentry is up and running
+  uri:
+    url: "http://{{ ansible_host }}:9000"
+    status_code: 200
+  register: sentry_status
+  retries: 5
+  delay: 10
+  until: sentry_status.status == 200

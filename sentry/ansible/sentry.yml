@@ -1,0 +1,8 @@
+---
+- name: Deploy Sentry with Docker on AWS EC2
+  hosts: sentry_server
+  become: yes
+  vars_files:
+    - defaults/main.yml
+  roles:
+    - sentry

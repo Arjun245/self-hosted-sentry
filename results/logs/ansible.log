@@ -1,0 +1,152 @@
+~/workspace/self-hosted-sentry/sentry$ cd ansible/
+~/workspace/self-hosted-sentry/sentry/ansible$ ansible-galaxy install -r requirements.yml
+Starting galaxy role install process
+- downloading role 'docker', owned by geerlingguy
+- downloading role from https://github.com/geerlingguy/ansible-role-docker/archive/7.4.4.tar.gz
+- extracting geerlingguy.docker to /home/tecnotree/workspace/self-hosted-sentry/sentry/ansible/roles/geerlingguy.docker
+- geerlingguy.docker (7.4.4) was installed successfully
+
+~/workspace/self-hosted-sentry/sentry/ansible$ ansible-playbook -e "SENTRY_ADMIN_EMAIL=*********** SENTRY_ADMIN_PASSWORD=******" sentry.yml
+ 
+PLAY [Deploy Sentry with Docker on AWS EC2] ***************************************************************************************************************
+
+TASK [Gathering Facts] ************************************************************************************************************************************
+ok: [98.130.79.253]
+
+TASK [Install Docker] *************************************************************************************************************************************
+
+TASK [geerlingguy.docker : Load OS-specific vars.] ********************************************************************************************************
+ok: [98.130.79.253]
+
+TASK [geerlingguy.docker : include_tasks] *****************************************************************************************************************
+skipping: [98.130.79.253]
+
+TASK [geerlingguy.docker : include_tasks] *****************************************************************************************************************
+included: /home/tecnotree/workspace/self-hosted-sentry/sentry/ansible/roles/geerlingguy.docker/tasks/setup-Debian.yml for 98.130.79.253
+
+TASK [geerlingguy.docker : Ensure apt key is not present in trusted.gpg.d] ********************************************************************************
+ok: [98.130.79.253]
+
+TASK [geerlingguy.docker : Ensure old apt source list is not present in /etc/apt/sources.list.d] **********************************************************
+ok: [98.130.79.253]
+
+TASK [geerlingguy.docker : Ensure the repo referencing the previous trusted.gpg.d key is not present] *****************************************************
+ok: [98.130.79.253]
+
+TASK [geerlingguy.docker : Ensure old versions of Docker are not installed.] ******************************************************************************
+ok: [98.130.79.253]
+
+TASK [geerlingguy.docker : Ensure dependencies are installed.] ********************************************************************************************
+ok: [98.130.79.253]
+
+TASK [geerlingguy.docker : Ensure directory exists for /etc/apt/keyrings] *********************************************************************************
+ok: [98.130.79.253]
+
+TASK [geerlingguy.docker : Add Docker apt key.] ***********************************************************************************************************
+changed: [98.130.79.253]
+
+TASK [geerlingguy.docker : Ensure curl is present (on older systems without SNI).] ************************************************************************
+skipping: [98.130.79.253]
+
+TASK [geerlingguy.docker : Add Docker apt key (alternative for older systems without SNI).] ***************************************************************
+skipping: [98.130.79.253]
+
+TASK [geerlingguy.docker : Add Docker repository.] ********************************************************************************************************
+changed: [98.130.79.253]
+
+TASK [geerlingguy.docker : Install Docker packages.] ******************************************************************************************************
+skipping: [98.130.79.253]
+
+TASK [geerlingguy.docker : Install Docker packages (with downgrade option).] ******************************************************************************
+changed: [98.130.79.253]
+
+TASK [geerlingguy.docker : Install docker-compose plugin.] ************************************************************************************************
+skipping: [98.130.79.253]
+
+TASK [geerlingguy.docker : Install docker-compose-plugin (with downgrade option).] ************************************************************************
+ok: [98.130.79.253]
+
+TASK [geerlingguy.docker : Ensure /etc/docker/ directory exists.] *****************************************************************************************
+skipping: [98.130.79.253]
+
+TASK [geerlingguy.docker : Configure Docker daemon options.] **********************************************************************************************
+skipping: [98.130.79.253]
+
+TASK [geerlingguy.docker : Ensure Docker is started and enabled at boot.] *********************************************************************************
+ok: [98.130.79.253]
+
+TASK [geerlingguy.docker : Ensure handlers are notified now to avoid firewall conflicts.] *****************************************************************
+
+RUNNING HANDLER [geerlingguy.docker : restart docker] *****************************************************************************************************
+changed: [98.130.79.253]
+
+TASK [geerlingguy.docker : include_tasks] *****************************************************************************************************************
+skipping: [98.130.79.253]
+
+TASK [geerlingguy.docker : Get docker group info using getent.] *******************************************************************************************
+skipping: [98.130.79.253]
+
+TASK [geerlingguy.docker : Check if there are any users to add to the docker group.] **********************************************************************
+
+TASK [geerlingguy.docker : include_tasks] *****************************************************************************************************************
+skipping: [98.130.79.253]
+
+TASK [sentry : Add user to Docker group] ******************************************************************************************************************
+changed: [98.130.79.253]
+
+TASK [sentry : Clone the Sentry self-hosted repository] ***************************************************************************************************
+changed: [98.130.79.253]
+
+TASK [sentry : Set permissions for the self-hosted repository] ********************************************************************************************
+changed: [98.130.79.253]
+
+TASK [sentry : Configure environment variables for Sentry] ************************************************************************************************
+changed: [98.130.79.253]
+
+TASK [sentry : Run Sentry installation script] ************************************************************************************************************
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=802071676900.3211 started=1 finished=0
+ASYNC OK on 98.130.79.253: jid=802071676900.3211
+changed: [98.130.79.253]
+
+TASK [sentry : Configure CSRF_TRUSTED_ORIGINS] ************************************************************************************************************
+changed: [98.130.79.253]
+
+TASK [sentry : Start Sentry using Docker Compose] *********************************************************************************************************
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC POLL on 98.130.79.253: jid=956464301254.14750 started=1 finished=0
+ASYNC OK on 98.130.79.253: jid=956464301254.14750
+changed: [98.130.79.253]
+
+TASK [sentry : Create Sentry admin user] ******************************************************************************************************************
+changed: [98.130.79.253]
+
+TASK [sentry : Verify Sentry is up and running] ***********************************************************************************************************
+ok: [98.130.79.253]
+
+PLAY RECAP ************************************************************************************************************************************************
+98.130.79.253              : ok=24   changed=12   unreachable=0    failed=0    skipped=11   rescued=0    ignored=0
