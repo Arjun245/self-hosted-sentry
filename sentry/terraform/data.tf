@@ -1,5 +1,5 @@
 # Fetch the most recent Ubuntu AMI based on name pattern and virtualization type
-data "aws_ami" "ubuntu" {
+data "aws_ami" "os_ami" {
   most_recent = true
 
   filter {

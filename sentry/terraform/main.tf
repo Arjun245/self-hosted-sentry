@@ -30,16 +30,17 @@ module "vpc" {
 module "ec2_instance" {
   source            = "./modules/ec2"
   instance_name     = var.instance_name
-  ami               = data.aws_ami.ubuntu.id
+  ami               = data.aws_ami.os_ami.id
   instance_type     = var.instance_type
   key_name          = var.key_name
   security_group_id = module.security_group.id
   root_volume_size  = var.root_volume_size
 }
 
-# Allowcate Elastic IP for EC2
+# Allocate Elastic IP for EC2
 resource "aws_eip" "sentry_eip" {
-  instance = module.ec2_instance.instance_id
+  instance   = module.ec2_instance.instance_id
+  depends_on = [module.ec2_instance]
 }
 
 # Security Group
@@ -49,14 +50,9 @@ module "security_group" {
   allowed_ports = var.allowed_ports
 }
 
-# null_resource to update Ansible inventory after EC2 creation
-resource "null_resource" "update_inventory" {
-  provisioner "local-exec" {
-    command = <<EOT
-      echo "[${var.instance_name}]" > ../ansible/inventory/hosts.ini
-      echo "${aws_eip.sentry_eip.public_ip}" >> ../ansible/inventory/hosts.ini
-    EOT
-  }
-
-  depends_on = [aws_eip.sentry_eip]
+# Ansible Inventory
+resource "local_file" "inventory" {
+  content  = "[${var.instance_name}]\n${aws_eip.sentry_eip.public_ip}"
+  filename = "${path.module}/../ansible/inventory/hosts.ini"
+  file_permission = "0644"
 }
