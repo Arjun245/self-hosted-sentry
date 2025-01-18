@@ -1,5 +1,21 @@
 # Self-Hosted Sentry on AWS
 
+## Table of Contents
+1. [Project Description](#project-description)
+2. [Project Setup](#project-setup)
+    - [Pre-requisites](#pre-requisites)
+    - [AWS CLI Configuration](#aws-cli-configuration)
+    - [S3 Backend Configuration (Optional)](#s3-backend-configuration-optional)
+3. [Installation](#installation)
+    - [Terraform Setup](#terraform-setup)
+    - [Ansible Setup](#ansible-setup)
+4. [Deployment Logs](#deployment-logs)
+5. [Screenshots](#screenshots)
+6. [Helpful Resources](#helpful-resources)
+7. [Contact](#contact)
+
+---
+
 ## Project Description
 
 This repository automates the deployment of a Self-Hosted Sentry on an AWS Virtual Machine using Terraform for infrastructure provisioning and Ansible for configuration. It simplifies the setup of Sentry, providing a ready-to-use solution for error tracking and performance monitoring on AWS.
