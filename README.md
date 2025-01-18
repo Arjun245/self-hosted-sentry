@@ -159,12 +159,40 @@ ansible-playbook -e "SENTRY_ADMIN_EMAIL=your_email@example.com SENTRY_ADMIN_PASS
 
 ---
 
+## Deployment Logs
+
+The logs for the Terraform and Ansible deployment can be found in the `logs/` folder:
+
+- [terraform_output.log](results/logs/terraform.log)
+- [ansible_output.log](results/logs/ansible.log)
+
+These logs provide a detailed output of the deployment process, including the creation of resources and installation of Sentry.
+
+---
+
+## Screenshots
+
+Here are some screenshots of the sentry deployment:
+
+![Sentry Login](results/screenshots/Screenshot-1.png)
+*The Sentry login page.*
+
+![Sentry Login](results/screenshots/Screenshot-2.png)
+*The Sentry welcome page.*
+
+![Sentry Login](results/screenshots/Screenshot-3.png)
+*The Sentry dashboard page.*
+
+---
+
 ## Helpful Resources
 
 1. [Sentry Official Website](https://sentry.io/welcome/)
 2. [Self-Hosted Sentry GitHub Repository](https://github.com/getsentry/self-hosted)
 3. [Self-Hosted Sentry Documentation](https://develop.sentry.dev/self-hosted/)
 4. [Sentry Community - Discord](https://discord.com/invite/sentry)
+
+---
 
 ## Contact
 
