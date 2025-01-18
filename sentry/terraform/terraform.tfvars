@@ -6,6 +6,7 @@ instance_type       = "t3.xlarge"
 key_name            = "sentry-key"
 ami_name_pattern    = "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
 ami_owners          = ["099720109477"] # Ubuntu images account owner
+ansible_user        = "ubuntu" # this will be added to ansible inventory hosts
 virtualization_type = "hvm"
 root_volume_size    = 30
 vpc_name            = "sentry-vpc"

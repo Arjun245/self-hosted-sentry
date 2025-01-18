@@ -52,7 +52,11 @@ module "security_group" {
 
 # Ansible Inventory
 resource "local_file" "inventory" {
-  content  = "[${var.instance_name}]\n${aws_eip.sentry_eip.public_ip}"
-  filename = "${path.module}/../ansible/inventory/hosts.ini"
+  content = <<EOT
+[${var.instance_name}]
+${aws_eip.sentry_eip.public_ip} ansible_user=${var.ansible_user} ansible_private_key_file=${path.cwd}/secrets/${var.key_name}.pem
+EOT
+
+  filename        = "../ansible/inventory/hosts.ini"
   file_permission = "0644"
 }

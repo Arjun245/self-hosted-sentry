@@ -28,6 +28,11 @@ variable "virtualization_type" {
   default     = "hvm"
 }
 
+variable "ansible_user" {
+  description = "The user to connect to the instance via Ansible"
+  type        = string
+}
+
 # VPC Module Variables
 variable "vpc_name" {
   description = "Name of the VPC"

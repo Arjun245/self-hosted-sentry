@@ -140,19 +140,7 @@ terraform apply
 
 After provisioning the EC2 instance with Terraform, proceed with the Ansible setup:
 
-### 1. **Set Required Environment Variables**
-   - Set the following environment variables for Ansible:
-
-```bash
-export SENTRY_ADMIN_EMAIL="your-email@example.com"
-export SENTRY_ADMIN_PASSWORD="your-password"
-```
-
-   - If not set, default values will be used:
-     - `sentry_admin_email`: `admin@sentry.com`
-     - `sentry_admin_password`: `admin`
-
-### 2. **Install Ansible Dependencies**
+### 1. **Install Ansible Dependencies**
 
    - Change to the Ansible directory and install the required roles:
 
@@ -161,15 +149,13 @@ cd ansible/
 ansible-galaxy install -r requirements.yml
 ```
 
-### 3. **Run Ansible Playbook**
+### 2. **Run Ansible Playbook**
 
    - Run the Ansible playbook to set up and configure Sentry:
 
 ```bash
-ansible-playbook -i inventory/hosts.ini -u ubuntu --private-key=../terraform/secrets/sentry-key.pem sentry.yml
+ansible-playbook -e "SENTRY_ADMIN_EMAIL=your_email@example.com SENTRY_ADMIN_PASSWORD=your_password" sentry.yml
 ```
-
-   - Ensure you specify the correct EC2 instance user (e.g., `ubuntu`).
 
 ---
 
